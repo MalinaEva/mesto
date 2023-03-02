@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <link rel="stylesheet" href="./pages/index.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mesto</title>
+</head>
+
+<body>
+    <div class="page">
+        <header class="header">
+            <img src="./images/logo.svg" alt="Логотип Место" class="header__logo">            
+        </header>
+        <main class="content">
+            <section class="profile">
+                <div class="profile__info">
+                    <img src="./images/JakIv.png" alt="Фото профиля" class="profile__avatar">
+                    <div class="profile__item">
+                        <div class="profile__header">
+                            <h1 class="profile__title">Жак-Ив Кусто</h1>
+                            <p class="profile__text">Исследователь океана</p>   
+                        </div>
+                        <button class="profile__edit-button" type="button"></button>
+                    </div>
+                 </div>
+                 <button class="profile__add-button" type="button"></button>
+            </section>
+            
+            <section class="elements">
+                <div class="element">
+                    <img src="./images/altai.jpg" alt="Алтайские горы и лошади" class="element__img">
+                    <div class="element__block">
+                        <h2 class="element__title">Алтай</h2>
+                        <button class="element__button-like" type="button">
+                        </button>
+                    </div>
+                </div>
+                <div class="element">
+                    <img src="./images/Teriberka.jpg" alt="Село Териберка" class="element__img">
+                    <div class="element__block">
+                        <h2 class="element__title">Териберка</h2>
+                        <button class="element__button-like" type="button">
+                        </button>
+                    </div>
+                </div>
+                <div class="element">
+                    <img src="./images/karachaevo.jpg" alt="Карачаево-Черкесия" class="element__img">
+                    <div class="element__block">
+                        <h2 class="element__title">Карачаево-Черкесия</h2>
+                        <button class="element__button-like" type="button">
+                        </button>
+                    </div>
+                </div>
+                <div class="element">
+                    <img src="./images/kamchatka.jpg" alt="Гора на Камчатке" class="element__img">
+                    <div class="element__block">
+                        <h2 class="element__title">Камчатка</h2>
+                        <button class="element__button-like" type="button">
+                        </button>
+                    </div>
+                </div>
+                <div class="element">
+                    <img src="./images/baikal.jpg" alt="Озеро Байкал" class="element__img">
+                    <div class="element__block">
+                        <h2 class="element__title">Байкал</h2>
+                        <button class="element__button-like" type="button">
+                        </button>
+                    </div>
+                </div>
+                <div class="element">
+                    <img src="./images/rosa khutor.jpg" alt="Рододендрон на Роза Хутор" class="element__img">
+                    <div class="element__block">
+                        <h2 class="element__title">Роза Хутор</h2>
+                        <button class="element__button-like" type="button">
+                        </button>
+                    </div>
+                </div>
+
+            </section>
+        </main>
+        <footer class="footer">
+            <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
+        </footer>
+        <div class="popup">
+            <div class="popup__container">
+                <button class="popup__button-close" type="button"></button>
+                <h2 class="popup__title">Редактировать профиль</h2>
+                <form class="popup__form">
+                    <input type="text" value="" placeholder="Имя" class="popup__name">
+                    <input type="text" value="" placeholder="О себе" class="popup__description">
+                    <button class="popup__button-submit" type="submit">Сохранить</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <script src="./js/index.js" type="text/javascript"></script>
+</body>
+</html>
