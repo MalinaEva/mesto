@@ -5,11 +5,11 @@ const closeBtn = document.querySelector('.popup__button-close');
 const profileTitle = document.querySelector('.profile__title');
 const profileText = document.querySelector('.profile__text');
 
-const popupName = document.querySelector('.popup__name');
-const popupDescription = document.querySelector('.popup__description');
+const popupName = document.querySelector('.popup__input_name');
+const popupDescription = document.querySelector('.popup__input_description');
 const popupForm = document.querySelector('.popup__form');
 
-const likeButtons = document.querySelectorAll('.element__button-like');
+// const likeButtons = document.querySelectorAll('.element__button-like');
 
 editBtn.addEventListener('click', function () {
     popupName.value = profileTitle.textContent;
@@ -28,8 +28,8 @@ popupForm.addEventListener('submit', function (event) {
     popup.classList.remove('popup_opened');
 });
 
-likeButtons.forEach(function (like) {
-    like.addEventListener('click', function () {
-        like.classList.toggle('element__button-like_active');
-    });
-})
+// likeButtons.forEach(function (like) {
+//     like.addEventListener('click', function () {
+//         like.classList.toggle('element__button-like_active');
+//     });
+// })
