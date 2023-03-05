@@ -5,8 +5,8 @@ const closeBtn = document.querySelector('.popup__button-close');
 const profileTitle = document.querySelector('.profile__title');
 const profileText = document.querySelector('.profile__text');
 
-const popupName = document.querySelector('.popup__input_name');
-const popupDescription = document.querySelector('.popup__input_description');
+const popupName = document.querySelector('.popup__input_type_name');
+const popupDescription = document.querySelector('.popup__input_type_description');
 const popupForm = document.querySelector('.popup__form');
 
 // const likeButtons = document.querySelectorAll('.element__button-like');
