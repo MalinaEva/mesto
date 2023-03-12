@@ -14,6 +14,7 @@ const popupImg = document.querySelector('.popup_type_img');
 const profileTitle = document.querySelector('.profile__title');
 const profileText = document.querySelector('.profile__text');
 const elementTemplate = document.getElementById('element-template');
+const elements = document.querySelector('.elements');
 const initialCards = [
     {
     name: 'Архыз',
@@ -41,49 +42,55 @@ const initialCards = [
     }
 ];
 
+// открыть попап
+const openPopup = (popup) => {
+    popup.classList.add('popup_opened');
+}
+
 // открыть попап редактирования профиля
 const editPopupOpen = () => {
     popupName.value = profileTitle.textContent;
     popupDescription.value = profileText.textContent;
-    popupEdit.classList.add('popup_opened');
+    openPopup(popupEdit);
 }
 
 // открыть попап добавления
 const addPopupOpen = () => {
-    popupAdd.classList.add('popup_opened');
+    openPopup(popupAdd);
 }
 
 // открыть попап с фото
-const imgPopupOpen = event => {
-    popupImg.classList.add('popup_opened');
+const openImgPopup = event => {
+    openPopup(popupImg);
 
-    const title = event.target.parentNode.querySelector('.element__title').textContent;
+    const title = event.target.closest('.element').querySelector('.element__title').textContent;
     const url = event.target.src;
     document.querySelector('.popup_type_img .popup__title').textContent = title;
     document.querySelector('.popup_type_img .popup__image').src = url;
+    document.querySelector('.popup_type_img .popup__image').alt = title;
 }
 
 // слушатель для удаления карточки
-const delButtonListener = () => {
-    const delBtn = document.querySelector('.element__button-del');
+const listenerDelButton = card => {
+    const delBtn = card.querySelector('.element__button-del');
     
     delBtn.addEventListener('click', event => {
-        event.target.parentNode.remove();
+        event.target.closest('.element').remove();
     });
 }
 
 // слушатель для открытия попапа с фото
-const popupImageListener = () => {
-    const elementImage = document.querySelector('.element__img');
+const listenerPopupImage = card => {
+    const elementImage = card.querySelector('.element__img');
 
     elementImage.addEventListener('click', event => {
-        imgPopupOpen(event);
+        openImgPopup(event);
     });
 }
 
 // слушатель для лайка
-const likeButtonListener = () => {
-    const likeButton = document.querySelector('.element__button-like');
+const listenerLikeButton = (card) => {
+    const likeButton = card.querySelector('.element__button-like');
     
     likeButton.addEventListener('click', () => {
         likeButton.classList.toggle('element__button-like_active');
@@ -91,31 +98,38 @@ const likeButtonListener = () => {
 }
 
 // закрыть все попапы
-const popupClose = () => {
+const closePopup = () => {
     popups.forEach(popup => {
         popup.classList.remove('popup_opened');
     });
 }
 
-// добавление карточки
-const addCard = (name, url) => {
-    let template = elementTemplate.cloneNode(true).content;
-    const elementName = template.querySelector('.element__title');
-    const elementImg = template.querySelector('.element__img');
-    elementName.textContent = name;
-    elementImg.alt = name;
-    elementImg.src = url;
-    document.querySelector('.elements').prepend(template);
+// создание карточки
+const createCard = item => {
+    const cardElement = elementTemplate.cloneNode(true).content;
+    const elementName = cardElement.querySelector('.element__title');
+    const elementImg = cardElement.querySelector('.element__img');
+    elementName.textContent = item.name;
+    elementImg.alt = item.name;
+    elementImg.src = item.link;
 
-    delButtonListener();
-    popupImageListener();
-    likeButtonListener();
+    listenerDelButton(cardElement);
+    listenerPopupImage(cardElement);
+    listenerLikeButton(cardElement);
+
+    return cardElement;
+}
+
+// вставка карточки
+const addCard = item => {
+    const cardElement = createCard(item);
+    elements.prepend(cardElement);
 }
 
 // добавление стартовых карточек
 const initCards = () => {
     initialCards.forEach(card => {
-        addCard(card.name, card.link);
+        addCard(card);
     });
 }
 
@@ -124,7 +138,7 @@ editBtn.addEventListener('click', () => { editPopupOpen() });
 
 // слушатель для закрытия попапов
 closeBtns.forEach(closeBtn => {
-    closeBtn.addEventListener('click', () => { popupClose() });
+    closeBtn.addEventListener('click', () => { closePopup() });
 });
 
 // слушатель для сохранения редактирования профиля
@@ -132,7 +146,7 @@ popupFormEdit.addEventListener('submit', event => {
     event.preventDefault();
     profileTitle.textContent = popupName.value;
     profileText.textContent = popupDescription.value;
-    popupClose();
+    closePopup();
 });
 
 // слушатель для открытия попапа редактирования профиля
@@ -143,8 +157,9 @@ addBtn.addEventListener('click', () => {
 // слушатель для добавления новой карточки
 popupFormAdd.addEventListener('submit', event => {
     event.preventDefault();
-    addCard(popupTitle.value, popupUrl.value);
-    popupClose();
+    addCard({ name: popupTitle.value, link: popupUrl.value });
+    event.target.reset();
+    closePopup();
 });
 
 document.addEventListener('DOMContentLoaded', () => {
