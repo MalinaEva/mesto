@@ -11,6 +11,8 @@ const popupTitle = document.querySelector('.popup__input_type_title');
 const popupUrl = document.querySelector('.popup__input_type_url');
 const popupFormAdd = document.querySelector('.popup__form_add');
 const popupImg = document.querySelector('.popup_type_img');
+const popupImgTitle = popupImg.querySelector('.popup__title');
+const popupImgImage = popupImg.querySelector('.popup__image');
 const profileTitle = document.querySelector('.profile__title');
 const profileText = document.querySelector('.profile__text');
 const elementTemplate = document.getElementById('element-template');
@@ -65,9 +67,9 @@ const openImgPopup = event => {
 
     const title = event.target.closest('.element').querySelector('.element__title').textContent;
     const url = event.target.src;
-    document.querySelector('.popup_type_img .popup__title').textContent = title;
-    document.querySelector('.popup_type_img .popup__image').src = url;
-    document.querySelector('.popup_type_img .popup__image').alt = title;
+    popupImgTitle.textContent = title;
+    popupImgImage.src = url;
+    popupImgImage.alt = title;
 }
 
 // слушатель для удаления карточки
