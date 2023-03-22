@@ -44,6 +44,15 @@ const initialCards = [
     }
 ];
 
+const validateConfig = {
+    formSelector: '.popup__form',
+    inputSelector: '.popup__input',
+    submitButtonSelector: '.popup__button-submit',
+    inactiveButtonClass: 'popup__button-submit_disabled',
+    inputErrorClass: 'popup__input_type_error',
+    errorClass: 'popup__input-message_active'
+};
+
 // открыть попап
 const openPopup = (popup) => {
     popup.classList.add('popup_opened');
@@ -105,17 +114,15 @@ const listenerPopupOverlay = () => {
     popups.forEach(popup => {
         popup.addEventListener('click', (evt) => {
             if (evt.target.classList.contains('popup_opened')) {
-                closePopup();
+                closePopup(evt.target);
             }
         });
     });
 }
 
 // закрыть все попапы
-const closePopup = () => {
-    popups.forEach(popup => {
-        popup.classList.remove('popup_opened');
-    });
+const closePopup = (popup) => {
+    popup.classList.remove('popup_opened');
     document.removeEventListener('keydown', handleModalEsc);
 }
 
@@ -153,23 +160,23 @@ const submitEditProfile = (event) => {
     event.preventDefault();
     profileTitle.textContent = popupName.value;
     profileText.textContent = popupDescription.value;
-    closePopup();
+    closePopup(popupEdit);
 }
 
 // отправка формы добавления карточки
 const submitAddCard = (event) => {
     event.preventDefault();
     addCard({ name: popupTitle.value, link: popupUrl.value });
-    const submitBtn = event.target.querySelector('.popup__button-submit');
-    disableSubmit(submitBtn, true);
+    disableSubmit(validateConfig, event.submitter, true);
     event.target.reset();
-    closePopup();
+    closePopup(popupAdd);
 }
 
 // обработчик для события нажатия Esc в модалках
 const handleModalEsc = (event) => {
     if (event.key === 'Escape') {
-        closePopup();
+        const openedPopup = document.querySelector('.popup.popup_opened');
+        closePopup(openedPopup);
     }
 }
 
@@ -178,7 +185,10 @@ editBtn.addEventListener('click', () => { editPopupOpen() });
 
 // слушатель для закрытия попапов
 closeBtns.forEach(closeBtn => {
-    closeBtn.addEventListener('click', () => { closePopup() });
+    closeBtn.addEventListener('click', (event) => {
+        const openedPopup = event.target.closest('.popup');
+        closePopup(openedPopup);
+    });
 });
 
 // слушатель для сохранения редактирования профиля
@@ -198,12 +208,5 @@ document.addEventListener('DOMContentLoaded', () => {
     listenerPopupOverlay();
     
     // включение валидации форм
-    enableValidation({
-        formSelector: '.popup__form',
-        inputSelector: '.popup__input',
-        submitButtonSelector: '.popup__button-submit',
-        inactiveButtonClass: 'popup__button-submit_disabled',
-        inputErrorClass: 'popup__input_type_error',
-        errorClass: 'popup__input-message_active'
-    });
+    enableValidation(validateConfig);
 });
