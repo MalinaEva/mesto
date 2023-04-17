@@ -12,12 +12,12 @@ const blocks = {
 	popupUrl: document.querySelector('.popup__input_type_url'),
 	popupFormAdd: document.querySelector('.popup__form_add'),
 	popupImg: document.querySelector('.popup_type_img'),
-	popupImgTitle: popupImg.querySelector('.popup__title'),
-	popupImgImage: popupImg.querySelector('.popup__image'),
 	profileTitle: document.querySelector('.profile__title'),
 	profileText: document.querySelector('.profile__text'),
 	elements: document.querySelector('.elements'),
 }
+blocks.popupImgTitle = blocks.popupImg.querySelector('.popup__title');
+blocks.popupImgImage = blocks.popupImg.querySelector('.popup__image');
 
 const initialCards = [
 	{
