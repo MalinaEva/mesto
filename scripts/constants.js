@@ -1,6 +1,5 @@
+const profile = document.querySelector('.profile');
 const blocks = {
-	editBtn: document.querySelector('.profile__edit-button'),
-	addBtn: document.querySelector('.profile__add-button'),
 	closeBtns: document.querySelectorAll('.popup__button-close'),
 	popups: document.querySelectorAll('.popup'),
 	popupEdit: document.querySelector('.popup_type_edit'),
@@ -12,12 +11,14 @@ const blocks = {
 	popupUrl: document.querySelector('.popup__input_type_url'),
 	popupFormAdd: document.querySelector('.popup__form_add'),
 	popupImg: document.querySelector('.popup_type_img'),
-	profileTitle: document.querySelector('.profile__title'),
-	profileText: document.querySelector('.profile__text'),
+	editBtn: profile.querySelector('.profile__edit-button'),
+	addBtn: profile.querySelector('.profile__add-button'),
+	profileTitle: profile.querySelector('.profile__title'),
+	profileText: profile.querySelector('.profile__text'),
 	elements: document.querySelector('.elements'),
 }
-blocks.popupImgTitle = blocks.popupImg.querySelector('.popup__title');
-blocks.popupImgImage = blocks.popupImg.querySelector('.popup__image');
+blocks.popupImgTitle = blocks.popupImg.querySelector('.popup__title')
+blocks.popupImgImage = blocks.popupImg.querySelector('.popup__image')
 
 const initialCards = [
 	{
@@ -44,7 +45,7 @@ const initialCards = [
 		name: 'Байкал',
 		link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
 	}
-];
+]
 
 const validateConfig = {
 	formSelector: '.popup__form',
@@ -53,6 +54,6 @@ const validateConfig = {
 	inactiveButtonClass: 'popup__button-submit_disabled',
 	inputErrorClass: 'popup__input_type_error',
 	errorClass: 'popup__input-message_active'
-};
+}
 
-export { blocks, initialCards, validateConfig };
+export { blocks, initialCards, validateConfig }

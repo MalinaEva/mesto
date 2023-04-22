@@ -1,5 +1,3 @@
-import { disableSubmit } from './utils.js'
-
 export class FormValidator {
 	constructor (config, formElement) {
 		this._config = config;
@@ -8,7 +6,7 @@ export class FormValidator {
 		this._buttonElement = this._formElement.querySelector(this._config.submitButtonSelector);
 	}
 
-	enableValidation() {
+	enableValidation () {
 		this._toggleButtonState();
 
 		this._inputList.forEach((inputElement) => {
@@ -20,21 +18,21 @@ export class FormValidator {
 	}
 
 	// если в форме есть ошибки, выключаем submit, иначе включаем
-	_toggleButtonState() {
+	_toggleButtonState () {
 		if (this._hasInvalidInput()) {
-			disableSubmit(this._config, this._buttonElement, true);
+			this.toggleSubmitButton(true);
 		} else {
-			disableSubmit(this._config, this._buttonElement, false);
+			this.toggleSubmitButton(false);
 		}
 	}
 
 	// есть ли в указанных инпутах хотя бы одна ошибка валидации
-	_hasInvalidInput() {
+	_hasInvalidInput () {
 		return this._inputList.some((inputElement) => !inputElement.validity.valid);
 	}
 
 	// если есть ошибки - показываем сообщение, иначе скрываем
-	_checkInputValidity(inputElement) {
+	_checkInputValidity (inputElement) {
 		if (!inputElement.validity.valid) {
 			this._showInputError(inputElement, inputElement.validationMessage);
 		} else {
@@ -42,7 +40,7 @@ export class FormValidator {
 		}
 	}
 
-	_showInputError(inputElement, errorMessage) {
+	_showInputError (inputElement, errorMessage) {
 		const errorElement = this._formElement.querySelector(`#${inputElement.id}-message`);
 		inputElement.classList.add(this._config.inputErrorClass);
 		errorElement.textContent = errorMessage;
@@ -50,10 +48,22 @@ export class FormValidator {
 	}
 
 // скрываем сообщение об ошибке для указанного инпута
-	_hideInputError(inputElement) {
+	_hideInputError (inputElement) {
 		const errorElement = this._formElement.querySelector(`#${inputElement.id}-message`);
 		inputElement.classList.remove(this._config.inputErrorClass);
 		errorElement.classList.remove(this._config.errorClass);
 		errorElement.textContent = '';
+	}
+
+	// выключить/выключить кнопку submit
+	// todo: временно публичный
+	toggleSubmitButton (isDisabled) {
+		if (isDisabled) {
+			this._buttonElement.classList.add(this._config.inactiveButtonClass);
+			this._buttonElement.disabled = true;
+		} else {
+			this._buttonElement.classList.remove(this._config.inactiveButtonClass);
+			this._buttonElement.disabled = false;
+		}
 	}
 }
