@@ -2,6 +2,9 @@ import { Card } from './Card.js';
 import { FormValidator } from './FormValidator.js';
 import { blocks, initialCards, validateConfig } from './constants.js';
 
+const formValidatorEdit = new FormValidator(validateConfig, blocks.popupFormEdit);
+const formValidatorAdd = new FormValidator(validateConfig, blocks.popupFormAdd);
+
 // открыть попап
 const openPopup = (popup) => {
 	popup.classList.add('popup_opened');
@@ -34,11 +37,8 @@ const handlePopupOverlayClick = (event) => {
 }
 
 // открыть попап с фото
-export const openImgPopup = (event) => {
+export const openImgPopup = (title, url) => {
 	openPopup(blocks.popupImg);
-
-	const title = event.target.closest('.element').querySelector('.element__title').textContent;
-	const url = event.target.src;
 	blocks.popupImgTitle.textContent = title;
 	blocks.popupImgImage.src = url;
 	blocks.popupImgImage.alt = title;
@@ -80,7 +80,7 @@ const submitAddCard = (event) => {
 	event.preventDefault();
 	const cardElement = createCard({ name: blocks.popupTitle.value, link: blocks.popupUrl.value });
 	addCard(cardElement);
-	new FormValidator(validateConfig, event.target).toggleSubmitButton(true);
+	formValidatorAdd.toggleSubmitButton(true);
 	event.target.reset();
 	closePopup(blocks.popupAdd);
 };
@@ -119,9 +119,8 @@ const handleClosePopup = (event) => {
 
 // включить валидацию всех форм
 const enableValidation = () => {
-	document.querySelectorAll(validateConfig.formSelector).forEach((formElement) => {
-		new FormValidator(validateConfig, formElement).enableValidation();
-	});
+	formValidatorEdit.enableValidation();
+	formValidatorAdd.enableValidation();
 };
 
 initCards();
