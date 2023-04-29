@@ -1,9 +1,12 @@
-import { openImgPopup } from './index.js';
+// import { openImgPopup } from './index.js';
 
 export class Card {
-	constructor (data, templateSelector) {
-		this._name = data.name;
-		this._link = data.link;
+	constructor ({ name, link, handleCardClick }, templateSelector) {
+		this._name = name;
+		this._link = link;
+		this._handleCardClick = handleCardClick;
+		this._handleCardClick = this._handleCardClick.bind(this);
+
 
 		this._cardElement = document.querySelector(templateSelector)
 			.content
@@ -11,14 +14,13 @@ export class Card {
 			.cloneNode(true);
 
 		this._elementName = this._cardElement.querySelector('.element__title');
-		this._elementImg = this._cardElement.querySelector('.element__img');
 		this._likeButton = this._cardElement.querySelector('.element__button-like');
 		this._elementImage = this._cardElement.querySelector('.element__img');
 		this._deleteButton = this._cardElement.querySelector('.element__button-del');
 
 		this._elementName.textContent = this._name;
-		this._elementImg.alt = this._name;
-		this._elementImg.src = this._link;
+		this._elementImage.alt = this._name;
+		this._elementImage.src = this._link;
 	}
 
 	make () {
@@ -29,7 +31,7 @@ export class Card {
 	_setEventListener () {
 		this._deleteButton.addEventListener('click', () => this._handleDeleteButtonClick());
 		this._likeButton.addEventListener('click', () => this._handleLikeClick());
-		this._elementImage.addEventListener('click', () => openImgPopup(this._name, this._link));
+		this._elementImage.addEventListener('click', () => this._handleCardClick());
 	}
 
 	// слушатель для удаления карточки
