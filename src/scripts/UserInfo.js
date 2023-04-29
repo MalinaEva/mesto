@@ -1,7 +1,7 @@
 export class UserInfo {
-	constructor({ userNameSelector, userAboutElement }) {
-		this._userNameElement = document.querySelector(userNameSelector);
-		this._userAboutElement = document.querySelector(userAboutElement);
+	constructor({ userNameElementSelector, userAboutElementSelector }) {
+		this._userNameElement = document.querySelector(userNameElementSelector);
+		this._userAboutElement = document.querySelector(userAboutElementSelector);
 	}
 
 	// Метод для получения информации о пользователе

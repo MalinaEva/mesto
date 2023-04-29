@@ -10,26 +10,32 @@ import { FormValidator } from '../scripts/FormValidator.js';
 import { blocks, initialCards, validateConfig } from '../scripts/constants.js';
 
 const userInfo = new UserInfo({
-	userNameSelector: '.profile__title',
-	userAboutElement: '.profile__text',
+	userNameElementSelector: '.profile__title',
+	userAboutElementSelector: '.profile__text',
 });
+const popupWithImage = new PopupWithImage('.popup_type_img');
+const addFormPopup = new PopupWithForm('.popup_type_add', (item) => submitAddCard(item));
+const editProfilePopup = new PopupWithForm('.popup_type_edit', (data) => userInfo.setUserInfo(data));
 const formValidatorEdit = new FormValidator(validateConfig, blocks.popupFormEdit);
 const formValidatorAdd = new FormValidator(validateConfig, blocks.popupFormAdd);
-
-// создание и вставка карточек
-const renderCards = (cardsData, containerSelector) => {
-	const cards = new Section(
-		{
-			items: cardsData,
-			renderer: (card) => {
-				const cardElement = createCard(card);
-				cards.addItem(cardElement);
-			},
+const cardsSection = new Section(
+	{
+		renderer: (card) => {
+			const cardElement = createCard(card);
+			cardsSection.addItem(cardElement);
 		},
-		containerSelector
-	);
-	cards.renderItems();
-}
+	},
+	".elements"
+);
+
+popupWithImage.setEventListeners();
+addFormPopup.setEventListeners();
+editProfilePopup.setEventListeners();
+blocks.addBtn.addEventListener('click', () => {
+	formValidatorAdd.toggleSubmitButton(true);
+	addFormPopup.open();
+});
+blocks.editBtn.addEventListener('click', () => openEditProfilePopup());
 
 // создание карточки и установка слушателей
 const createCard = (item) => {
@@ -37,35 +43,21 @@ const createCard = (item) => {
 		name: item.name,
 		link: item.link,
 		handleCardClick: () => {
-			const popup = new PopupWithImage('.popup_type_img');
-			popup.setEventListeners();
-			popup.open({ src: item.link, alt: item.name });
+			popupWithImage.open({ src: item.link, alt: item.name });
 		}
 	},'#element-template').make();
 };
 
 // отправка формы добавления карточки
 const submitAddCard = (item) => {
-	renderCards([{name: item.title, link: item.url}], '.elements');
-	formValidatorAdd.toggleSubmitButton(true);
+	cardsSection.renderItems([{ name: item.title, link: item.url }]);
 };
 
-const openEditProfilePopup = (editProfilePopup) => {
+const openEditProfilePopup = () => {
 	const currentUserInfo = userInfo.getUserInfo();
 	blocks.popupName.value = currentUserInfo.name;
 	blocks.popupDescription.value = currentUserInfo.about;
 	editProfilePopup.open();
-}
-
-const initForms = () => {
-	const addFormPopup = new PopupWithForm('.popup_type_add', submitAddCard);
-	addFormPopup.setEventListeners();
-	blocks.addBtn.addEventListener('click', () => addFormPopup.open());
-
-
-	const editProfilePopup = new PopupWithForm('.popup_type_edit', (data) => userInfo.setUserInfo(data));
-	editProfilePopup.setEventListeners();
-	blocks.editBtn.addEventListener('click', () => openEditProfilePopup(editProfilePopup));
 }
 
 // включить валидацию всех форм
@@ -74,6 +66,5 @@ const enableValidation = () => {
 	formValidatorAdd.enableValidation();
 };
 
-renderCards(initialCards, '.elements');
-initForms();
 enableValidation();
+cardsSection.renderItems(initialCards);
