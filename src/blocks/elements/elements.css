@@ -10,14 +10,14 @@
 
 @media screen and (max-width: 1023px) {
     .elements {
-      grid-template-columns: repeat(2, 282px);
+        grid-template-columns: repeat(2, 282px);
     }
 }
-  
+
 @media screen and (max-width: 767px) {
     .elements {
-      grid-template-columns: 282px;
-      padding: 0 19px 0 19px;
-      gap: 19px;
+        grid-template-columns: 282px;
+        padding: 0 19px 0 19px;
+        gap: 19px;
     }
 }

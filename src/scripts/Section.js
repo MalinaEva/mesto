@@ -1,17 +1,16 @@
 export class Section {
-	constructor({ renderer }, containerSelector) {
-		this._renderer = renderer;
-		this._renderer = this._renderer.bind(this);
+	constructor ({ renderer }, containerSelector) {
+		this._renderer = renderer.bind(this);
 		this._container = document.querySelector(containerSelector);
 	}
 
 	// Метод для отрисовки всех элементов
-	renderItems(items) {
-		items.forEach(item => this._renderer(item));
+	renderItems (items, prepend = true) {
+		items.forEach(item => this._renderer(item, prepend));
 	}
 
 	// Метод для добавления DOM-элемента в контейнер
-	addItem(element) {
-		this._container.prepend(element);
+	addItem (element, prepend = true) {
+		(prepend) ? this._container.prepend(element) : this._container.append(element);
 	}
 }

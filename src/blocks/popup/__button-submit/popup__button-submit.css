@@ -10,6 +10,7 @@
     width: 100%;
     margin: 31px 0 0;
     border: 0;
+    cursor: pointer;
 }
 
 .popup__button-submit:hover {
