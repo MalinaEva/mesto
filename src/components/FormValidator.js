@@ -47,7 +47,7 @@ export class FormValidator {
 		errorElement.classList.add(this._config.errorClass);
 	}
 
-// скрываем сообщение об ошибке для указанного инпута
+	// скрываем сообщение об ошибке для указанного инпута
 	_hideInputError (inputElement) {
 		const errorElement = this._formElement.querySelector(`#${inputElement.id}-message`);
 		inputElement.classList.remove(this._config.inputErrorClass);
@@ -56,7 +56,6 @@ export class FormValidator {
 	}
 
 	// выключить/выключить кнопку submit
-	// todo: временно публичный
 	toggleSubmitButton (isDisabled) {
 		if (isDisabled) {
 			this._buttonElement.classList.add(this._config.inactiveButtonClass);
@@ -65,5 +64,13 @@ export class FormValidator {
 			this._buttonElement.classList.remove(this._config.inactiveButtonClass);
 			this._buttonElement.disabled = false;
 		}
+	}
+
+	resetValidation() {
+		this._inputList.forEach((inputElement) => {
+			this._hideInputError(inputElement);
+		});
+
+		this._toggleButtonState();
 	}
 }

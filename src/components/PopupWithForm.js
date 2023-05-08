@@ -28,7 +28,6 @@ export class PopupWithForm extends Popup {
 			event.preventDefault();
 			this.renderLoading(true);
 			this._submitCallback(this._getInputValues());
-			this.close();
 		});
 	}
 

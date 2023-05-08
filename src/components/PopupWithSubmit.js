@@ -20,7 +20,6 @@ export class PopupWithSubmit extends Popup {
 			event.preventDefault();
 			try {
 				this._submitCallback();
-				this.close();
 			} catch (err) {
 				console.error(err);
 			}

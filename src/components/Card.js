@@ -1,5 +1,3 @@
-// import { openImgPopup } from './index.js';
-
 export class Card {
 	constructor ({ data, callbacks }, templateSelector) {
 		this._id = data.id;
